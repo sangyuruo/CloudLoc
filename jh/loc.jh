@@ -1,0 +1,53 @@
+/** 
+* 地址表 
+* @author Capejor
+*/
+entity Address {
+/** 地址名称 */
+addressName String maxlength(200),
+/** 地址代码 */
+addressCode String maxlength(64) required,
+/** 经度 */
+longitude Integer required,
+/** 纬度 */
+latitude Integer required,
+/** 地区代码 */
+areaCode String maxlength(64),
+/** 是否有效 */
+enable Boolean required,
+/** 创建人员 */
+createdBy String maxlength(20) required,
+/** 创建时间 */
+createTime Instant required,
+/** 更新人员 */
+updatedBy String maxlength(20) required,
+/** 更新时间 */
+updateTime Instant required
+}
+
+/** 
+* 地区表 
+* @author Capejor
+*/
+entity Area {
+/** 地区名称 */
+areaName String maxlength(200),
+/** 地区代码 */
+areaCode String maxlength(64) required,
+/** 邮政编码 */
+postCode String maxlength(64) required,
+/** 父地址编码 */
+parentAreaCode String maxlength(64),
+/** 创建人员 */
+createdBy String maxlength(20) required,
+/** 创建时间 */
+createTime Instant required,
+/** 更新人员 */
+updatedBy String maxlength(20) required,
+/** 更新时间 */
+updateTime Instant required
+}
+
+relationship OneToOne{
+  Address{area} to Area
+}
