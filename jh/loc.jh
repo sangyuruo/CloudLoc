@@ -30,14 +30,18 @@ updateTime Instant required
 * @author Capejor
 */
 entity Area {
-/** 地区名称 */
-areaName String maxlength(200),
 /** 地区代码 */
-areaCode String maxlength(64) required,
+areaCode String maxlength(20) required,
+/** 地区名称 */
+areaName String maxlength(100),
 /** 邮政编码 */
-postCode String maxlength(64) required,
+zipCode String maxlength(20) required,
 /** 父地址编码 */
-parentAreaCode String maxlength(64),
+parentId String maxlength(10) required,
+/** 父地址名称 */
+parentName String maxlength(100),
+/** 深度 */
+depth String maxlength(64) required,
 /** 创建人员 */
 createdBy String maxlength(20) required,
 /** 创建时间 */
@@ -48,6 +52,7 @@ updatedBy String maxlength(20) required,
 updateTime Instant required
 }
 
-relationship OneToOne{
+relationship ManyToOne{
   Address{area} to Area
 }
+
