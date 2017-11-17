@@ -99,6 +99,20 @@ public class AddressResource {
     }
 
     /**
+     * GET  /addresses : get all the addresses.
+     *
+     * @param pageable the pagination information
+     * @return the ResponseEntity with status 200 (OK) and the list of addresses in body
+     */
+    @GetMapping("/addresses")
+    @Timed
+    public ResponseEntity<List<Address>> getAllAddressesByAddressName(@ApiParam Pageable pageable,@PathVariable String addressName) {
+        log.debug("REST request to get a page of Addresses");
+        Page<Address> page = addressService.findByAddressName(pageable,addressName);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/addresses/addressName");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+    /**
      * GET  /addresses/:id : get the "id" address.
      *
      * @param id the id of the address to retrieve

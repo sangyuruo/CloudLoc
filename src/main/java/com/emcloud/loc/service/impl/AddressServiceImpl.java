@@ -75,6 +75,19 @@ public class AddressServiceImpl implements AddressService{
     }
 
     /**
+     *  Get all the addresses by addressName.
+     *
+     *  @param pageable the pagination information
+     *  @return the list of entities
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Address> findByAddressName(Pageable pageable,String addressName) {
+        log.debug("Request to get all Addresses by addressName");
+        return addressRepository.findAllByAddressNameContaining(pageable,addressName);
+    }
+
+    /**
      *  Get one address by id.
      *
      *  @param id the id of the entity
@@ -98,16 +111,5 @@ public class AddressServiceImpl implements AddressService{
         addressRepository.delete(id);
     }
 
-    /**
-     *  Get one address by id.
-     *
-     *  @param addressName the id of the entity
-     *  @return the entity
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public Page<Address> findByaddressName(Pageable pageable,String addressName) {
-        log.debug("Request to get Address : {}", addressName);
-        return addressRepository.findAllByAddressNameContaining(pageable,addressName);
-    }
+
 }

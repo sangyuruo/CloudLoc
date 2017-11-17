@@ -104,7 +104,7 @@ public class AreaServiceImpl implements AreaService{
         String host = "http://jisuarea.market.alicloudapi.com";
         String path = "/area/all";
         String method = "GET";
-        String appcode = "你自己的AppCode";
+        String appcode = "2d64ca52435743b1934fd761a4ea3655";
         Map<String, String> headers = new HashMap<String, String>();
         //最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105
         headers.put("Authorization", "APPCODE " + appcode);
