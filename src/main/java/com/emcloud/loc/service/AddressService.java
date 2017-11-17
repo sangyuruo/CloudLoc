@@ -47,4 +47,12 @@ public interface AddressService {
      *  @param id the id of the entity
      */
     void delete(Long id);
+
+    /**
+     *  Get the "id" address.
+     *
+     *  @param addressName the id of the entity
+     *  @return the entity
+     */
+    Page<Address> findByaddressName(Pageable pageable,String addressName);
 }

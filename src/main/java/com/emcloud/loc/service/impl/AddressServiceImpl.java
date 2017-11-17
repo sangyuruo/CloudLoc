@@ -97,4 +97,17 @@ public class AddressServiceImpl implements AddressService{
         log.debug("Request to delete Address : {}", id);
         addressRepository.delete(id);
     }
+
+    /**
+     *  Get one address by id.
+     *
+     *  @param addressName the id of the entity
+     *  @return the entity
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Address> findByaddressName(Pageable pageable,String addressName) {
+        log.debug("Request to get Address : {}", addressName);
+        return addressRepository.findAllByAddressNameContaining(pageable,addressName);
+    }
 }
