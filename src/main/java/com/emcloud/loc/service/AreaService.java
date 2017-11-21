@@ -25,8 +25,6 @@ public interface AreaService {
      */
     Area update(Area area);
 
-
-
     /**
      *  Get all the areas.
      *

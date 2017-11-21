@@ -3,15 +3,6 @@
     "relationships": [],
     "fields": [
         {
-            "fieldName": "areaName",
-            "javadoc": "地区名称",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "maxlength"
-            ],
-            "fieldValidateRulesMaxlength": 200
-        },
-        {
             "fieldName": "areaCode",
             "javadoc": "地区代码",
             "fieldType": "String",
@@ -19,24 +10,53 @@
                 "maxlength",
                 "required"
             ],
-            "fieldValidateRulesMaxlength": 64
+            "fieldValidateRulesMaxlength": 20
         },
         {
-            "fieldName": "postCode",
+            "fieldName": "areaName",
+            "javadoc": "地区名称",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        },
+        {
+            "fieldName": "zipCode",
             "javadoc": "邮政编码",
             "fieldType": "String",
             "fieldValidateRules": [
                 "maxlength",
                 "required"
             ],
-            "fieldValidateRulesMaxlength": 64
+            "fieldValidateRulesMaxlength": 20
         },
         {
-            "fieldName": "parentAreaCode",
+            "fieldName": "parentId",
             "javadoc": "父地址编码",
             "fieldType": "String",
             "fieldValidateRules": [
+                "maxlength",
+                "required"
+            ],
+            "fieldValidateRulesMaxlength": 10
+        },
+        {
+            "fieldName": "parentName",
+            "javadoc": "父地址名称",
+            "fieldType": "String",
+            "fieldValidateRules": [
                 "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        },
+        {
+            "fieldName": "depth",
+            "javadoc": "深度",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength",
+                "required"
             ],
             "fieldValidateRulesMaxlength": 64
         },
@@ -77,7 +97,7 @@
             ]
         }
     ],
-    "changelogDate": "20171115095834",
+    "changelogDate": "20171121075021",
     "javadoc": "地区表\n@author Capejor",
     "entityTableName": "area",
     "dto": "no",

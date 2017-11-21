@@ -2,12 +2,10 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipType": "one-to-one",
+            "relationshipType": "many-to-one",
             "relationshipName": "area",
             "otherEntityName": "area",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "address"
+            "otherEntityField": "id"
         }
     ],
     "fields": [
@@ -100,7 +98,7 @@
             ]
         }
     ],
-    "changelogDate": "20171115095833",
+    "changelogDate": "20171121075020",
     "javadoc": "地址表\n@author Capejor",
     "entityTableName": "address",
     "dto": "no",

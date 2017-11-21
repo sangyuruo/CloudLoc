@@ -80,7 +80,7 @@ class AreaGatlingTest extends Simulation {
             .exec(http("Create new area")
             .post("/emcloudloc/api/areas")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "areaName":"SAMPLE_TEXT", "areaCode":"SAMPLE_TEXT", "postCode":"SAMPLE_TEXT", "parentAreaCode":"SAMPLE_TEXT", "createdBy":"SAMPLE_TEXT", "createTime":"2020-01-01T00:00:00.000Z", "updatedBy":"SAMPLE_TEXT", "updateTime":"2020-01-01T00:00:00.000Z"}""")).asJSON
+            .body(StringBody("""{"id":null, "areaCode":"SAMPLE_TEXT", "areaName":"SAMPLE_TEXT", "zipCode":"SAMPLE_TEXT", "parentId":"SAMPLE_TEXT", "parentName":"SAMPLE_TEXT", "depth":"SAMPLE_TEXT", "createdBy":"SAMPLE_TEXT", "createTime":"2020-01-01T00:00:00.000Z", "updatedBy":"SAMPLE_TEXT", "updateTime":"2020-01-01T00:00:00.000Z"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_area_url"))).exitHereIfFailed
             .pause(10)

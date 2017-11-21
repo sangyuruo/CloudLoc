@@ -28,38 +28,56 @@ public class Area implements Serializable {
     private Long id;
 
     /**
-     * 地区名称
-     */
-    @Size(max = 200)
-    @ApiModelProperty(value = "地区名称")
-    @Column(name = "area_name", length = 200)
-    private String areaName;
-
-    /**
      * 地区代码
      */
     @NotNull
-    @Size(max = 64)
+    @Size(max = 20)
     @ApiModelProperty(value = "地区代码", required = true)
-    @Column(name = "area_code", length = 64, nullable = false)
+    @Column(name = "area_code", length = 20, nullable = false)
     private String areaCode;
+
+    /**
+     * 地区名称
+     */
+    @Size(max = 100)
+    @ApiModelProperty(value = "地区名称")
+    @Column(name = "area_name", length = 100)
+    private String areaName;
 
     /**
      * 邮政编码
      */
     @NotNull
-    @Size(max = 64)
+    @Size(max = 20)
     @ApiModelProperty(value = "邮政编码", required = true)
-    @Column(name = "post_code", length = 64, nullable = false)
-    private String postCode;
+    @Column(name = "zip_code", length = 20, nullable = false)
+    private String zipCode;
 
     /**
      * 父地址编码
      */
+    @NotNull
+    @Size(max = 10)
+    @ApiModelProperty(value = "父地址编码", required = true)
+    @Column(name = "parent_id", length = 10, nullable = false)
+    private String parentId;
+
+    /**
+     * 父地址名称
+     */
+    @Size(max = 100)
+    @ApiModelProperty(value = "父地址名称")
+    @Column(name = "parent_name", length = 100)
+    private String parentName;
+
+    /**
+     * 深度
+     */
+    @NotNull
     @Size(max = 64)
-    @ApiModelProperty(value = "父地址编码")
-    @Column(name = "parent_area_code", length = 64)
-    private String parentAreaCode;
+    @ApiModelProperty(value = "深度", required = true)
+    @Column(name = "depth", length = 64, nullable = false)
+    private String depth;
 
     /**
      * 创建人员
@@ -104,19 +122,6 @@ public class Area implements Serializable {
         this.id = id;
     }
 
-    public String getAreaName() {
-        return areaName;
-    }
-
-    public Area areaName(String areaName) {
-        this.areaName = areaName;
-        return this;
-    }
-
-    public void setAreaName(String areaName) {
-        this.areaName = areaName;
-    }
-
     public String getAreaCode() {
         return areaCode;
     }
@@ -130,30 +135,69 @@ public class Area implements Serializable {
         this.areaCode = areaCode;
     }
 
-    public String getPostCode() {
-        return postCode;
+    public String getAreaName() {
+        return areaName;
     }
 
-    public Area postCode(String postCode) {
-        this.postCode = postCode;
+    public Area areaName(String areaName) {
+        this.areaName = areaName;
         return this;
     }
 
-    public void setPostCode(String postCode) {
-        this.postCode = postCode;
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
     }
 
-    public String getParentAreaCode() {
-        return parentAreaCode;
+    public String getZipCode() {
+        return zipCode;
     }
 
-    public Area parentAreaCode(String parentAreaCode) {
-        this.parentAreaCode = parentAreaCode;
+    public Area zipCode(String zipCode) {
+        this.zipCode = zipCode;
         return this;
     }
 
-    public void setParentAreaCode(String parentAreaCode) {
-        this.parentAreaCode = parentAreaCode;
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public Area parentId(String parentId) {
+        this.parentId = parentId;
+        return this;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getParentName() {
+        return parentName;
+    }
+
+    public Area parentName(String parentName) {
+        this.parentName = parentName;
+        return this;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
+
+    public String getDepth() {
+        return depth;
+    }
+
+    public Area depth(String depth) {
+        this.depth = depth;
+        return this;
+    }
+
+    public void setDepth(String depth) {
+        this.depth = depth;
     }
 
     public String getCreatedBy() {
@@ -233,10 +277,12 @@ public class Area implements Serializable {
     public String toString() {
         return "Area{" +
             "id=" + getId() +
-            ", areaName='" + getAreaName() + "'" +
             ", areaCode='" + getAreaCode() + "'" +
-            ", postCode='" + getPostCode() + "'" +
-            ", parentAreaCode='" + getParentAreaCode() + "'" +
+            ", areaName='" + getAreaName() + "'" +
+            ", zipCode='" + getZipCode() + "'" +
+            ", parentId='" + getParentId() + "'" +
+            ", parentName='" + getParentName() + "'" +
+            ", depth='" + getDepth() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createTime='" + getCreateTime() + "'" +
             ", updatedBy='" + getUpdatedBy() + "'" +

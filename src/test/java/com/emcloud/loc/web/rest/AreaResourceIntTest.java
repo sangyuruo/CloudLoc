@@ -6,7 +6,6 @@ import com.emcloud.loc.config.SecurityBeanOverrideConfiguration;
 
 import com.emcloud.loc.domain.Area;
 import com.emcloud.loc.repository.AreaRepository;
-import com.emcloud.loc.service.AreaService;
 import com.emcloud.loc.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -43,17 +42,23 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = {EmCloudLocApp.class, SecurityBeanOverrideConfiguration.class})
 public class AreaResourceIntTest {
 
-    private static final String DEFAULT_AREA_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_AREA_NAME = "BBBBBBBBBB";
-
     private static final String DEFAULT_AREA_CODE = "AAAAAAAAAA";
     private static final String UPDATED_AREA_CODE = "BBBBBBBBBB";
 
-    private static final String DEFAULT_POST_CODE = "AAAAAAAAAA";
-    private static final String UPDATED_POST_CODE = "BBBBBBBBBB";
+    private static final String DEFAULT_AREA_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_AREA_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_PARENT_AREA_CODE = "AAAAAAAAAA";
-    private static final String UPDATED_PARENT_AREA_CODE = "BBBBBBBBBB";
+    private static final String DEFAULT_ZIP_CODE = "AAAAAAAAAA";
+    private static final String UPDATED_ZIP_CODE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_PARENT_ID = "AAAAAAAAAA";
+    private static final String UPDATED_PARENT_ID = "BBBBBBBBBB";
+
+    private static final String DEFAULT_PARENT_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_PARENT_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_DEPTH = "AAAAAAAAAA";
+    private static final String UPDATED_DEPTH = "BBBBBBBBBB";
 
     private static final String DEFAULT_CREATED_BY = "AAAAAAAAAA";
     private static final String UPDATED_CREATED_BY = "BBBBBBBBBB";
@@ -69,9 +74,6 @@ public class AreaResourceIntTest {
 
     @Autowired
     private AreaRepository areaRepository;
-
-    @Autowired
-    private AreaService areaService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -92,7 +94,7 @@ public class AreaResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final AreaResource areaResource = new AreaResource(areaService);
+        final AreaResource areaResource = new AreaResource(areaRepository);
         this.restAreaMockMvc = MockMvcBuilders.standaloneSetup(areaResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -108,10 +110,12 @@ public class AreaResourceIntTest {
      */
     public static Area createEntity(EntityManager em) {
         Area area = new Area()
-            .areaName(DEFAULT_AREA_NAME)
             .areaCode(DEFAULT_AREA_CODE)
-            .postCode(DEFAULT_POST_CODE)
-            .parentAreaCode(DEFAULT_PARENT_AREA_CODE)
+            .areaName(DEFAULT_AREA_NAME)
+            .zipCode(DEFAULT_ZIP_CODE)
+            .parentId(DEFAULT_PARENT_ID)
+            .parentName(DEFAULT_PARENT_NAME)
+            .depth(DEFAULT_DEPTH)
             .createdBy(DEFAULT_CREATED_BY)
             .createTime(DEFAULT_CREATE_TIME)
             .updatedBy(DEFAULT_UPDATED_BY)
@@ -139,10 +143,12 @@ public class AreaResourceIntTest {
         List<Area> areaList = areaRepository.findAll();
         assertThat(areaList).hasSize(databaseSizeBeforeCreate + 1);
         Area testArea = areaList.get(areaList.size() - 1);
-        assertThat(testArea.getAreaName()).isEqualTo(DEFAULT_AREA_NAME);
         assertThat(testArea.getAreaCode()).isEqualTo(DEFAULT_AREA_CODE);
-        assertThat(testArea.getPostCode()).isEqualTo(DEFAULT_POST_CODE);
-        assertThat(testArea.getParentAreaCode()).isEqualTo(DEFAULT_PARENT_AREA_CODE);
+        assertThat(testArea.getAreaName()).isEqualTo(DEFAULT_AREA_NAME);
+        assertThat(testArea.getZipCode()).isEqualTo(DEFAULT_ZIP_CODE);
+        assertThat(testArea.getParentId()).isEqualTo(DEFAULT_PARENT_ID);
+        assertThat(testArea.getParentName()).isEqualTo(DEFAULT_PARENT_NAME);
+        assertThat(testArea.getDepth()).isEqualTo(DEFAULT_DEPTH);
         assertThat(testArea.getCreatedBy()).isEqualTo(DEFAULT_CREATED_BY);
         assertThat(testArea.getCreateTime()).isEqualTo(DEFAULT_CREATE_TIME);
         assertThat(testArea.getUpdatedBy()).isEqualTo(DEFAULT_UPDATED_BY);
@@ -188,10 +194,46 @@ public class AreaResourceIntTest {
 
     @Test
     @Transactional
-    public void checkPostCodeIsRequired() throws Exception {
+    public void checkZipCodeIsRequired() throws Exception {
         int databaseSizeBeforeTest = areaRepository.findAll().size();
         // set the field null
-        area.setPostCode(null);
+        area.setZipCode(null);
+
+        // Create the Area, which fails.
+
+        restAreaMockMvc.perform(post("/api/areas")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(area)))
+            .andExpect(status().isBadRequest());
+
+        List<Area> areaList = areaRepository.findAll();
+        assertThat(areaList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkParentIdIsRequired() throws Exception {
+        int databaseSizeBeforeTest = areaRepository.findAll().size();
+        // set the field null
+        area.setParentId(null);
+
+        // Create the Area, which fails.
+
+        restAreaMockMvc.perform(post("/api/areas")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(area)))
+            .andExpect(status().isBadRequest());
+
+        List<Area> areaList = areaRepository.findAll();
+        assertThat(areaList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkDepthIsRequired() throws Exception {
+        int databaseSizeBeforeTest = areaRepository.findAll().size();
+        // set the field null
+        area.setDepth(null);
 
         // Create the Area, which fails.
 
@@ -287,10 +329,12 @@ public class AreaResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(area.getId().intValue())))
-            .andExpect(jsonPath("$.[*].areaName").value(hasItem(DEFAULT_AREA_NAME.toString())))
             .andExpect(jsonPath("$.[*].areaCode").value(hasItem(DEFAULT_AREA_CODE.toString())))
-            .andExpect(jsonPath("$.[*].postCode").value(hasItem(DEFAULT_POST_CODE.toString())))
-            .andExpect(jsonPath("$.[*].parentAreaCode").value(hasItem(DEFAULT_PARENT_AREA_CODE.toString())))
+            .andExpect(jsonPath("$.[*].areaName").value(hasItem(DEFAULT_AREA_NAME.toString())))
+            .andExpect(jsonPath("$.[*].zipCode").value(hasItem(DEFAULT_ZIP_CODE.toString())))
+            .andExpect(jsonPath("$.[*].parentId").value(hasItem(DEFAULT_PARENT_ID.toString())))
+            .andExpect(jsonPath("$.[*].parentName").value(hasItem(DEFAULT_PARENT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].depth").value(hasItem(DEFAULT_DEPTH.toString())))
             .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY.toString())))
             .andExpect(jsonPath("$.[*].createTime").value(hasItem(DEFAULT_CREATE_TIME.toString())))
             .andExpect(jsonPath("$.[*].updatedBy").value(hasItem(DEFAULT_UPDATED_BY.toString())))
@@ -308,10 +352,12 @@ public class AreaResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(area.getId().intValue()))
-            .andExpect(jsonPath("$.areaName").value(DEFAULT_AREA_NAME.toString()))
             .andExpect(jsonPath("$.areaCode").value(DEFAULT_AREA_CODE.toString()))
-            .andExpect(jsonPath("$.postCode").value(DEFAULT_POST_CODE.toString()))
-            .andExpect(jsonPath("$.parentAreaCode").value(DEFAULT_PARENT_AREA_CODE.toString()))
+            .andExpect(jsonPath("$.areaName").value(DEFAULT_AREA_NAME.toString()))
+            .andExpect(jsonPath("$.zipCode").value(DEFAULT_ZIP_CODE.toString()))
+            .andExpect(jsonPath("$.parentId").value(DEFAULT_PARENT_ID.toString()))
+            .andExpect(jsonPath("$.parentName").value(DEFAULT_PARENT_NAME.toString()))
+            .andExpect(jsonPath("$.depth").value(DEFAULT_DEPTH.toString()))
             .andExpect(jsonPath("$.createdBy").value(DEFAULT_CREATED_BY.toString()))
             .andExpect(jsonPath("$.createTime").value(DEFAULT_CREATE_TIME.toString()))
             .andExpect(jsonPath("$.updatedBy").value(DEFAULT_UPDATED_BY.toString()))
@@ -330,17 +376,18 @@ public class AreaResourceIntTest {
     @Transactional
     public void updateArea() throws Exception {
         // Initialize the database
-        areaService.save(area);
-
+        areaRepository.saveAndFlush(area);
         int databaseSizeBeforeUpdate = areaRepository.findAll().size();
 
         // Update the area
         Area updatedArea = areaRepository.findOne(area.getId());
         updatedArea
-            .areaName(UPDATED_AREA_NAME)
             .areaCode(UPDATED_AREA_CODE)
-            .postCode(UPDATED_POST_CODE)
-            .parentAreaCode(UPDATED_PARENT_AREA_CODE)
+            .areaName(UPDATED_AREA_NAME)
+            .zipCode(UPDATED_ZIP_CODE)
+            .parentId(UPDATED_PARENT_ID)
+            .parentName(UPDATED_PARENT_NAME)
+            .depth(UPDATED_DEPTH)
             .createdBy(UPDATED_CREATED_BY)
             .createTime(UPDATED_CREATE_TIME)
             .updatedBy(UPDATED_UPDATED_BY)
@@ -355,10 +402,12 @@ public class AreaResourceIntTest {
         List<Area> areaList = areaRepository.findAll();
         assertThat(areaList).hasSize(databaseSizeBeforeUpdate);
         Area testArea = areaList.get(areaList.size() - 1);
-        assertThat(testArea.getAreaName()).isEqualTo(UPDATED_AREA_NAME);
         assertThat(testArea.getAreaCode()).isEqualTo(UPDATED_AREA_CODE);
-        assertThat(testArea.getPostCode()).isEqualTo(UPDATED_POST_CODE);
-        assertThat(testArea.getParentAreaCode()).isEqualTo(UPDATED_PARENT_AREA_CODE);
+        assertThat(testArea.getAreaName()).isEqualTo(UPDATED_AREA_NAME);
+        assertThat(testArea.getZipCode()).isEqualTo(UPDATED_ZIP_CODE);
+        assertThat(testArea.getParentId()).isEqualTo(UPDATED_PARENT_ID);
+        assertThat(testArea.getParentName()).isEqualTo(UPDATED_PARENT_NAME);
+        assertThat(testArea.getDepth()).isEqualTo(UPDATED_DEPTH);
         assertThat(testArea.getCreatedBy()).isEqualTo(UPDATED_CREATED_BY);
         assertThat(testArea.getCreateTime()).isEqualTo(UPDATED_CREATE_TIME);
         assertThat(testArea.getUpdatedBy()).isEqualTo(UPDATED_UPDATED_BY);
@@ -387,8 +436,7 @@ public class AreaResourceIntTest {
     @Transactional
     public void deleteArea() throws Exception {
         // Initialize the database
-        areaService.save(area);
-
+        areaRepository.saveAndFlush(area);
         int databaseSizeBeforeDelete = areaRepository.findAll().size();
 
         // Get the area
