@@ -38,7 +38,7 @@ public class AreaServiceImpl implements AreaService{
     @Override
     public Area save(Area area) {
         log.debug("Request to save Area : {}", area);
-        area.setCreatedBy(SecurityUtils.getCurrentUserLogin());
+        area.createdBy(SecurityUtils.getCurrentUserLogin());
         area.setCreateTime(Instant.now());
         area.setUpdatedBy(SecurityUtils.getCurrentUserLogin());
         area.setUpdateTime(Instant.now());

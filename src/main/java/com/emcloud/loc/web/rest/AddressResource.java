@@ -104,7 +104,7 @@ public class AddressResource {
      * @param pageable the pagination information
      * @return the ResponseEntity with status 200 (OK) and the list of addresses in body
      */
-    @GetMapping("/addresses")
+    @GetMapping("/addresses/byname")
     @Timed
     public ResponseEntity<List<Address>> getAllAddressesByAddressName(@ApiParam Pageable pageable,@PathVariable String addressName) {
         log.debug("REST request to get a page of Addresses");

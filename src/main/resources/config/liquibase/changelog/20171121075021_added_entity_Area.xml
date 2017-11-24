@@ -50,7 +50,7 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="create_time" type="timestamp">
+            <column name="create_time" type="datetime">
                 <constraints nullable="false" />
             </column>
 
@@ -58,15 +58,14 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="update_time" type="timestamp">
+            <column name="update_time" type="datetime">
                 <constraints nullable="false" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        <dropDefaultValue tableName="area" columnName="create_time" columnDataType="datetime"/>
-        <dropDefaultValue tableName="area" columnName="update_time" columnDataType="datetime"/>
-        
+
+
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 </databaseChangeLog>

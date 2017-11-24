@@ -23,9 +23,10 @@ public class Area implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public Long id;
 
     /**
      * 地区代码
@@ -36,6 +37,7 @@ public class Area implements Serializable {
     @Column(name = "area_code", length = 20, nullable = false)
     private String areaCode;
 
+
     /**
      * 地区名称
      */
@@ -43,6 +45,8 @@ public class Area implements Serializable {
     @ApiModelProperty(value = "地区名称")
     @Column(name = "area_name", length = 100)
     private String areaName;
+
+
 
     /**
      * 邮政编码
@@ -53,6 +57,7 @@ public class Area implements Serializable {
     @Column(name = "zip_code", length = 20, nullable = false)
     private String zipCode;
 
+
     /**
      * 父地址编码
      */
@@ -62,6 +67,7 @@ public class Area implements Serializable {
     @Column(name = "parent_id", length = 10, nullable = false)
     private String parentId;
 
+
     /**
      * 父地址名称
      */
@@ -69,6 +75,7 @@ public class Area implements Serializable {
     @ApiModelProperty(value = "父地址名称")
     @Column(name = "parent_name", length = 100)
     private String parentName;
+
 
     /**
      * 深度
@@ -82,7 +89,6 @@ public class Area implements Serializable {
     /**
      * 创建人员
      */
-    @NotNull
     @Size(max = 20)
     @ApiModelProperty(value = "创建人员", required = true)
     @Column(name = "created_by", length = 20, nullable = false)
@@ -91,7 +97,6 @@ public class Area implements Serializable {
     /**
      * 创建时间
      */
-    @NotNull
     @ApiModelProperty(value = "创建时间", required = true)
     @Column(name = "create_time", nullable = false)
     private Instant createTime;
@@ -99,7 +104,6 @@ public class Area implements Serializable {
     /**
      * 更新人员
      */
-    @NotNull
     @Size(max = 20)
     @ApiModelProperty(value = "更新人员", required = true)
     @Column(name = "updated_by", length = 20, nullable = false)
@@ -108,7 +112,6 @@ public class Area implements Serializable {
     /**
      * 更新时间
      */
-    @NotNull
     @ApiModelProperty(value = "更新时间", required = true)
     @Column(name = "update_time", nullable = false)
     private Instant updateTime;
@@ -213,13 +216,14 @@ public class Area implements Serializable {
         this.createdBy = createdBy;
     }
 
-    public Instant getCreateTime() {
-        return createTime;
-    }
 
     public Area createTime(Instant createTime) {
         this.createTime = createTime;
         return this;
+    }
+    public Instant getCreateTime() {
+
+        return createTime;
     }
 
     public void setCreateTime(Instant createTime) {
@@ -289,4 +293,6 @@ public class Area implements Serializable {
             ", updateTime='" + getUpdateTime() + "'" +
             "}";
     }
+
+    public  Area(){}
 }
