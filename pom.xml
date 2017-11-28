@@ -452,11 +452,11 @@
             <artifactId>gatling-http</artifactId>
             <version>RELEASE</version>
         </dependency>
-        <dependency>
+       <!-- <dependency>
             <groupId>com.emcloud.loc</groupId>
             <artifactId>em-cloud-loc</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
