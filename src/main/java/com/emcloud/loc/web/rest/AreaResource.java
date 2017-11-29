@@ -87,8 +87,9 @@ public class AreaResource {
     @Timed
     public List<Area> getAllAreas() {
         log.debug("REST request to get all Areas");
-        return areaRepository.findAll();
-        }
+        List<Area> list = areaRepository.findAll();
+        return list;
+    }
 
     /**
      * GET  /areas/:id : get the "id" area.

@@ -8,6 +8,7 @@ import com.emcloud.loc.web.rest.util.HeaderUtil;
 import com.emcloud.loc.web.rest.util.PaginationUtil;
 import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
+import jodd.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -108,7 +109,15 @@ public class AddressResource {
     @Timed
     public ResponseEntity<List<Address>> getAllAddressesByAddressName(@ApiParam Pageable pageable,@PathVariable String addressName) {
         log.debug("REST request to get a page of Addresses");
-        Page<Address> page = addressService.findByAddressName(pageable,addressName);
+        Page<Address> page;
+        if(StringUtil.isBlank(addressName))
+        {
+            page = addressService.findAll(pageable);
+        }
+        else
+        {
+            page = addressService.findByAddressName(pageable,addressName);
+        }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/addresses/addressName");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
