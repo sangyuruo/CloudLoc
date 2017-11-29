@@ -1,14 +1,25 @@
 package com.emcloud.loc.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.emcloud.loc.domain.Address;
 import com.emcloud.loc.domain.Area;
 
 import com.emcloud.loc.repository.AreaRepository;
+import com.emcloud.loc.service.AreaService;
 import com.emcloud.loc.web.rest.errors.BadRequestAlertException;
 import com.emcloud.loc.web.rest.util.HeaderUtil;
+import com.emcloud.loc.web.rest.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +27,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,11 +42,10 @@ public class AreaResource {
 
     private static final String ENTITY_NAME = "area";
 
-    private final AreaRepository areaRepository;
 
-    public AreaResource(AreaRepository areaRepository) {
-        this.areaRepository = areaRepository;
-    }
+    @Autowired
+    private  AreaService areaService;
+
 
     /**
      * POST  /areas : Create a new area.
@@ -50,7 +61,7 @@ public class AreaResource {
         if (area.getId() != null) {
             throw new BadRequestAlertException("A new area cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Area result = areaRepository.save(area);
+        Area result = areaService.save(area);
         return ResponseEntity.created(new URI("/api/areas/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,7 +83,7 @@ public class AreaResource {
         if (area.getId() == null) {
             return createArea(area);
         }
-        Area result = areaRepository.save(area);
+        Area result = areaService.save(area);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, area.getId().toString()))
             .body(result);
@@ -85,10 +96,11 @@ public class AreaResource {
      */
     @GetMapping("/areas")
     @Timed
-    public List<Area> getAllAreas() {
+    public ResponseEntity<List<Area>> getAllAreas(@ApiParam Pageable pageable) {
         log.debug("REST request to get all Areas");
-        List<Area> list = areaRepository.findAll();
-        return list;
+        Page<Area> page = areaService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/Areas");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     /**
@@ -101,7 +113,7 @@ public class AreaResource {
     @Timed
     public ResponseEntity<Area> getArea(@PathVariable Long id) {
         log.debug("REST request to get Area : {}", id);
-        Area area = areaRepository.findOne(id);
+        Area area = areaService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(area));
     }
 
@@ -115,7 +127,7 @@ public class AreaResource {
     @Timed
     public ResponseEntity<Void> deleteArea(@PathVariable Long id) {
         log.debug("REST request to delete Area : {}", id);
-        areaRepository.delete(id);
+        areaService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }
