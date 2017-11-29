@@ -1,8 +1,13 @@
 package com.emcloud.loc.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.emcloud.loc.domain.Address;
 import com.emcloud.loc.domain.Area;
 
+<<<<<<< HEAD
+=======
+import com.emcloud.loc.repository.AreaRepository;
+>>>>>>> e40e538744d5e07c23ebcca0a5c3c0ee692ab526
 import com.emcloud.loc.service.AreaService;
 import com.emcloud.loc.web.rest.errors.BadRequestAlertException;
 import com.emcloud.loc.web.rest.util.HeaderUtil;
@@ -11,7 +16,15 @@ import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+<<<<<<< HEAD
 import org.springframework.data.domain.Page;
+=======
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+>>>>>>> e40e538744d5e07c23ebcca0a5c3c0ee692ab526
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +35,7 @@ import java.awt.print.Pageable;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,11 +50,18 @@ public class AreaResource {
 
     private static final String ENTITY_NAME = "area";
 
+<<<<<<< HEAD
     private AreaService areaService;
 
     public AreaResource(AreaService areaService) {
         this.areaService = areaService;
     }
+=======
+
+    @Autowired
+    private  AreaService areaService;
+
+>>>>>>> e40e538744d5e07c23ebcca0a5c3c0ee692ab526
 
     /**
      * POST  /areas : Create a new area.
@@ -91,13 +112,20 @@ public class AreaResource {
      */
     @GetMapping("/areas")
     @Timed
+<<<<<<< HEAD
     public ResponseEntity<List<Area>> getAllAreas(@ApiParam org.springframework.data.domain.Pageable pageable) {
+=======
+    public ResponseEntity<List<Area>> getAllAreas(@ApiParam Pageable pageable) {
+>>>>>>> e40e538744d5e07c23ebcca0a5c3c0ee692ab526
         log.debug("REST request to get all Areas");
         Page<Area> page = areaService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/Areas");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> e40e538744d5e07c23ebcca0a5c3c0ee692ab526
 
     /**
      * GET  /areas/:id : get the "id" area.
