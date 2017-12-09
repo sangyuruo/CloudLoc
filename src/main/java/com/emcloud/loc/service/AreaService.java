@@ -47,4 +47,12 @@ public interface AreaService {
      *  @param id the id of the entity
      */
     void delete(Long id);
+
+    /**
+     *  Get the areas by areaname or areacode.
+     *
+     *  @param pageable the pagination information
+     *  @return the list of entities
+     */
+    Page<Area> findAllByAreaNameOrAreaCode(Pageable pageable,String areaName,String areaCode);
 }

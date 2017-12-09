@@ -82,7 +82,7 @@ public class AddressServiceImpl implements AddressService{
      */
     @Override
     @Transactional(readOnly = true)
-    public Page<Address> findByAddressName(Pageable pageable,String addressName) {
+    public Page<Address> findAllByAddressName(Pageable pageable,String addressName) {
         log.debug("Request to get all Addresses by addressName");
         return addressRepository.findAllByAddressNameContaining(pageable,addressName);
     }

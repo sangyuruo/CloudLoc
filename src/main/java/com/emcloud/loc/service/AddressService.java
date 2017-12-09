@@ -54,5 +54,5 @@ public interface AddressService {
      *  @param addressName the id of the entity
      *  @return the entity
      */
-    Page<Address> findByAddressName(Pageable pageable,String addressName);
+    Page<Address> findAllByAddressName(Pageable pageable,String addressName);
 }

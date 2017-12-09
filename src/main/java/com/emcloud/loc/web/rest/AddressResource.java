@@ -116,7 +116,7 @@ public class AddressResource {
         }
         else
         {
-            page = addressService.findByAddressName(pageable,addressName);
+            page = addressService.findAllByAddressName(pageable,addressName);
         }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/addresses/addressName");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);

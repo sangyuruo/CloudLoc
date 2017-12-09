@@ -96,4 +96,17 @@ public class AreaServiceImpl implements AreaService{
         log.debug("Request to delete Area : {}", id);
         areaRepository.delete(id);
     }
+
+    /**
+     *  Get the areas by areaname or areacode.
+     *
+     *  @param pageable the pagination information
+     *  @return the list of entities
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Area> findAllByAreaNameOrAreaCode(Pageable pageable,String areaName,String areaCode) {
+        log.debug("Request to get by areaname or areacode");
+        return areaRepository.findAllByAreaNameOrAreaCodeContaining(pageable,areaName,areaCode);
+    }
 }
