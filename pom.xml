@@ -452,6 +452,14 @@
             <artifactId>gatling-http</artifactId>
             <version>RELEASE</version>
         </dependency>
+<<<<<<< HEAD
+=======
+       <!-- <dependency>
+            <groupId>com.emcloud.loc</groupId>
+            <artifactId>em-cloud-loc</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>-->
+>>>>>>> e40e538744d5e07c23ebcca0a5c3c0ee692ab526
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>

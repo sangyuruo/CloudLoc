@@ -1,10 +1,11 @@
 package com.emcloud.loc.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+
 import com.emcloud.loc.domain.AlArea;
 import com.emcloud.loc.domain.Area;
-
 import com.emcloud.loc.domain.Emm;
+
 import com.emcloud.loc.service.AreaService;
 import com.emcloud.loc.web.rest.errors.BadRequestAlertException;
 import com.emcloud.loc.web.rest.util.HeaderUtil;
@@ -18,18 +19,17 @@ import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
-
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +52,8 @@ public class AreaResource {
         this.areaService = areaService;
     }
 
+    @Autowired
+    private  AreaService areaService;
 
     /**
      * POST  /areas : Create a new area.
@@ -102,7 +104,9 @@ public class AreaResource {
      */
     @GetMapping("/areas")
     @Timed
-    public ResponseEntity<List<Area>> getAllAreas(@ApiParam org.springframework.data.domain.Pageable pageable) {
+
+    public ResponseEntity<List<Area>> getAllAreas(@ApiParam Pageable pageable) {
+
         log.debug("REST request to get all Areas");
         Page<Area> page = areaService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/Areas");
@@ -133,7 +137,6 @@ public class AreaResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
-
     /**
      * GET  /areas/:id : get the "id" area.
      *
@@ -162,7 +165,12 @@ public class AreaResource {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
-   /* public void fetchJson() {
+    /**
+     * fetchJson/areas/
+     *
+     */
+    @GetMapping("/areas")
+    public void fetchJson() {
         String host = "http://jisuarea.market.alicloudapi.com";
         String path = "/area/all";
         String method = "GET";
@@ -178,6 +186,7 @@ public class AreaResource {
             ObjectMapper mapper = new ObjectMapper();
             Emm beanList = mapper.readValue(EntityUtils.toString(response.getEntity()), Emm.class);
             //把json转成list/map数据格式
+            List<Area> list;
             for (AlArea alArea : beanList.getResult()) {
                 Area area = new Area();
                 area.setId(alArea.getId());
@@ -197,5 +206,5 @@ public class AreaResource {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
 }
