@@ -46,8 +46,6 @@ public class AreaResource {
 
     private static final String ENTITY_NAME = "area";
 
-    private AreaService areaService;
-
     public AreaResource(AreaService areaService) {
         this.areaService = areaService;
     }
@@ -169,7 +167,7 @@ public class AreaResource {
      * fetchJson/areas/
      *
      */
-    @GetMapping("/areas")
+    @GetMapping("/areas/sync")
     public void fetchJson() {
         String host = "http://jisuarea.market.alicloudapi.com";
         String path = "/area/all";
