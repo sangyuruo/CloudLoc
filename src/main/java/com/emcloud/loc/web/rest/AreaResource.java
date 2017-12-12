@@ -164,7 +164,7 @@ public class AreaResource {
     }
 
     /**
-     * fetchJson/areas/
+     * fetchJson/areas
      *
      */
     @GetMapping("/areas/sync")
