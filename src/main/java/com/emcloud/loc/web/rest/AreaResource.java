@@ -135,6 +135,25 @@ public class AreaResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
+
+
+    /**
+     * GET  /areas : get all the areas.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of areas in body
+     */
+    @GetMapping("/areas/ParentId")
+    @Timed
+    public ResponseEntity<List<Area>> getByParentIdAndDepth(@ApiParam Pageable pageable) {
+        log.debug("REST request to get all Areas");
+        Page<Area> page = areaService.findByParentIdAndDepth(pageable);
+
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/Areas/ParentId");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+
+
     /**
      * GET  /areas/:id : get the "id" area.
      *

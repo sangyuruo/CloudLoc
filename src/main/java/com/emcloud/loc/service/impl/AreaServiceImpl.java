@@ -109,4 +109,17 @@ public class AreaServiceImpl implements AreaService{
         log.debug("Request to get by areaname or areacode");
         return areaRepository.findAllByAreaNameOrAreaCodeContaining(pageable,areaName,areaCode);
     }
+
+    /**
+     *  Get the areas by parentId=0 or depth=1.
+     *
+     *  @param pageable the pagination information
+     *  @return the list of entities
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Area> findByParentIdAndDepth(Pageable pageable) {
+        log.debug("Request to get by parentId or depth");
+        return areaRepository.findByParentIdEqualsAndDepthEquals(pageable);
+    }
 }

@@ -55,4 +55,13 @@ public interface AreaService {
      *  @return the list of entities
      */
     Page<Area> findAllByAreaNameOrAreaCode(Pageable pageable,String areaName,String areaCode);
+
+
+    /**
+     *  Get the areas by parentId or depth.
+     *
+     *  @param pageable the pagination information
+     *  @return the list of entities
+     */
+    Page<Area> findByParentIdAndDepth(Pageable pageable);
 }

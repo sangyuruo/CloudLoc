@@ -17,5 +17,6 @@ public interface AreaRepository extends JpaRepository<Area, Long> {
    // @Query("select a from Area a where a.areaCode like %xx%")
 
     Page<Area> findAllByAreaNameOrAreaCodeContaining(Pageable pageable,String areaName,String areaCode);
-   // Page<Area> findAllByAreaNameContaining(Pageable pageable,String areaName);
+
+    Page<Area> findByParentIdEqualsAndDepthEquals(Pageable pageable);
 }
