@@ -58,6 +58,9 @@ public class AddressResourceIntTest {
     private static final String DEFAULT_AREA_CODE = "AAAAAAAAAA";
     private static final String UPDATED_AREA_CODE = "BBBBBBBBBB";
 
+    private static final String DEFAULT_AREA_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_AREA_NAME = "BBBBBBBBBB";
+
     private static final Boolean DEFAULT_ENABLE = false;
     private static final Boolean UPDATED_ENABLE = true;
 
@@ -119,6 +122,7 @@ public class AddressResourceIntTest {
             .longitude(DEFAULT_LONGITUDE)
             .latitude(DEFAULT_LATITUDE)
             .areaCode(DEFAULT_AREA_CODE)
+            .areaName(DEFAULT_AREA_NAME)
             .enable(DEFAULT_ENABLE)
             .createdBy(DEFAULT_CREATED_BY)
             .createTime(DEFAULT_CREATE_TIME)
@@ -152,6 +156,7 @@ public class AddressResourceIntTest {
         assertThat(testAddress.getLongitude()).isEqualTo(DEFAULT_LONGITUDE);
         assertThat(testAddress.getLatitude()).isEqualTo(DEFAULT_LATITUDE);
         assertThat(testAddress.getAreaCode()).isEqualTo(DEFAULT_AREA_CODE);
+        assertThat(testAddress.getAreaName()).isEqualTo(DEFAULT_AREA_NAME);
         assertThat(testAddress.isEnable()).isEqualTo(DEFAULT_ENABLE);
         assertThat(testAddress.getCreatedBy()).isEqualTo(DEFAULT_CREATED_BY);
         assertThat(testAddress.getCreateTime()).isEqualTo(DEFAULT_CREATE_TIME);
@@ -338,6 +343,7 @@ public class AddressResourceIntTest {
             .andExpect(jsonPath("$.[*].longitude").value(hasItem(DEFAULT_LONGITUDE)))
             .andExpect(jsonPath("$.[*].latitude").value(hasItem(DEFAULT_LATITUDE)))
             .andExpect(jsonPath("$.[*].areaCode").value(hasItem(DEFAULT_AREA_CODE.toString())))
+            .andExpect(jsonPath("$.[*].areaName").value(hasItem(DEFAULT_AREA_NAME.toString())))
             .andExpect(jsonPath("$.[*].enable").value(hasItem(DEFAULT_ENABLE.booleanValue())))
             .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY.toString())))
             .andExpect(jsonPath("$.[*].createTime").value(hasItem(DEFAULT_CREATE_TIME.toString())))
@@ -361,6 +367,7 @@ public class AddressResourceIntTest {
             .andExpect(jsonPath("$.longitude").value(DEFAULT_LONGITUDE))
             .andExpect(jsonPath("$.latitude").value(DEFAULT_LATITUDE))
             .andExpect(jsonPath("$.areaCode").value(DEFAULT_AREA_CODE.toString()))
+            .andExpect(jsonPath("$.areaName").value(DEFAULT_AREA_NAME.toString()))
             .andExpect(jsonPath("$.enable").value(DEFAULT_ENABLE.booleanValue()))
             .andExpect(jsonPath("$.createdBy").value(DEFAULT_CREATED_BY.toString()))
             .andExpect(jsonPath("$.createTime").value(DEFAULT_CREATE_TIME.toString()))
@@ -392,6 +399,7 @@ public class AddressResourceIntTest {
             .longitude(UPDATED_LONGITUDE)
             .latitude(UPDATED_LATITUDE)
             .areaCode(UPDATED_AREA_CODE)
+            .areaName(UPDATED_AREA_NAME)
             .enable(UPDATED_ENABLE)
             .createdBy(UPDATED_CREATED_BY)
             .createTime(UPDATED_CREATE_TIME)
@@ -412,6 +420,7 @@ public class AddressResourceIntTest {
         assertThat(testAddress.getLongitude()).isEqualTo(UPDATED_LONGITUDE);
         assertThat(testAddress.getLatitude()).isEqualTo(UPDATED_LATITUDE);
         assertThat(testAddress.getAreaCode()).isEqualTo(UPDATED_AREA_CODE);
+        assertThat(testAddress.getAreaName()).isEqualTo(UPDATED_AREA_NAME);
         assertThat(testAddress.isEnable()).isEqualTo(UPDATED_ENABLE);
         assertThat(testAddress.getCreatedBy()).isEqualTo(UPDATED_CREATED_BY);
         assertThat(testAddress.getCreateTime()).isEqualTo(UPDATED_CREATE_TIME);

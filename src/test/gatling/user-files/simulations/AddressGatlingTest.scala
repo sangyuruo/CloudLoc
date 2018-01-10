@@ -80,7 +80,7 @@ class AddressGatlingTest extends Simulation {
             .exec(http("Create new address")
             .post("/emcloudloc/api/addresses")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "addressName":"SAMPLE_TEXT", "addressCode":"SAMPLE_TEXT", "longitude":"0", "latitude":"0", "areaCode":"SAMPLE_TEXT", "enable":null, "createdBy":"SAMPLE_TEXT", "createTime":"2020-01-01T00:00:00.000Z", "updatedBy":"SAMPLE_TEXT", "updateTime":"2020-01-01T00:00:00.000Z"}""")).asJSON
+            .body(StringBody("""{"id":null, "addressName":"SAMPLE_TEXT", "addressCode":"SAMPLE_TEXT", "longitude":"0", "latitude":"0", "areaCode":"SAMPLE_TEXT", "areaName":"SAMPLE_TEXT","enable":null, "createdBy":"SAMPLE_TEXT", "createTime":"2020-01-01T00:00:00.000Z", "updatedBy":"SAMPLE_TEXT", "updateTime":"2020-01-01T00:00:00.000Z"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_address_url"))).exitHereIfFailed
             .pause(10)

@@ -69,6 +69,14 @@ public class Address implements Serializable {
     private String areaCode;
 
     /**
+     * 地区名称
+     */
+    @Size(max = 64)
+    @ApiModelProperty(value = "地区名称")
+    @Column(name = "area_name", length = 64)
+    private String areaName;
+
+    /**
      * 是否有效
      */
     @NotNull
@@ -184,6 +192,19 @@ public class Address implements Serializable {
         this.areaCode = areaCode;
     }
 
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public Address areaName(String areaName) {
+        this.areaName = areaName;
+        return this;
+    }
+
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
+    }
+
     public Boolean isEnable() {
         return enable;
     }
@@ -292,6 +313,7 @@ public class Address implements Serializable {
             ", longitude='" + getLongitude() + "'" +
             ", latitude='" + getLatitude() + "'" +
             ", areaCode='" + getAreaCode() + "'" +
+            ", areaName='" + getAreaName() + "'" +
             ", enable='" + isEnable() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createTime='" + getCreateTime() + "'" +

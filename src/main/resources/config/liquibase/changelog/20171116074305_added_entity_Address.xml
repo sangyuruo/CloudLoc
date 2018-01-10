@@ -42,6 +42,10 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="area_name" type="varchar(64)">
+                <constraints nullable="true" />
+            </column>
+
             <column name="jhi_enable" type="bit">
                 <constraints nullable="false" />
             </column>
